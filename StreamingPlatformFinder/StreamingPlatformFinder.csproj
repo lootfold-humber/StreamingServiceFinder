@@ -163,6 +163,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MoviesDataController.cs" />
+    <Compile Include="Controllers\PlatformsDataController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,6 +172,10 @@
     <Compile Include="Migrations\202202032342064_AddDbModels.cs" />
     <Compile Include="Migrations\202202032342064_AddDbModels.designer.cs">
       <DependentUpon>202202032342064_AddDbModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202040142279_AddConstraintsToModels.cs" />
+    <Compile Include="Migrations\202202040142279_AddConstraintsToModels.designer.cs">
+      <DependentUpon>202202040142279_AddConstraintsToModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -263,6 +269,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202202032342064_AddDbModels.resx">
       <DependentUpon>202202032342064_AddDbModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202040142279_AddConstraintsToModels.resx">
+      <DependentUpon>202202040142279_AddConstraintsToModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
