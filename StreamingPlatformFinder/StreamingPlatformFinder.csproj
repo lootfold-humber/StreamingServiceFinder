@@ -226,6 +226,7 @@
     <Content Include="Scripts\Movies\edit.js" />
     <Content Include="Scripts\Movies\index.js" />
     <Content Include="Scripts\Movies\show.js" />
+    <Content Include="Scripts\Platforms\create.js" />
     <Content Include="Scripts\Platforms\edit.js" />
     <Content Include="Scripts\Platforms\index.js" />
     <Content Include="Scripts\Platforms\show.js" />
@@ -250,6 +251,7 @@
     <Content Include="Views\Platforms\Index.cshtml" />
     <Content Include="Views\Platforms\Show.cshtml" />
     <Content Include="Views\Platforms\Edit.cshtml" />
+    <Content Include="Views\Platforms\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
