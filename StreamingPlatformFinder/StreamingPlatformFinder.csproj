@@ -227,6 +227,7 @@
     <Content Include="Scripts\Movies\index.js" />
     <Content Include="Scripts\Movies\show.js" />
     <Content Include="Scripts\Platforms\index.js" />
+    <Content Include="Scripts\Platforms\show.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -246,6 +247,7 @@
     <Content Include="Views\Movies\Edit.cshtml" />
     <Content Include="Views\Movies\Create.cshtml" />
     <Content Include="Views\Platforms\Index.cshtml" />
+    <Content Include="Views\Platforms\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
