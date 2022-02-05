@@ -11,6 +11,29 @@ namespace StreamingPlatformFinder.Controllers
     {
         private readonly AppDbContext _db = new AppDbContext();
 
+        /// <summary>
+        /// api to get all movies, supports pagination
+        /// movies?pageNo=1&pageSize=5&searchKey=dune
+        /// </summary>
+        /// <param name="pageSize">no of movies per page</param>
+        /// <param name="pageNo">page no to fetch</param>
+        /// <param name="searchKey">key to search movie titles</param>
+        /// <returns>
+        /// {
+        ///     "Movies": [
+        ///         {
+        ///             "Id": 31,
+        ///             "Title": "Dune",
+        ///             "Director": "Johnnie Tremblay",
+        ///             "Genre": "Action",
+        ///             "ReleaseYear": 2021,
+        ///             "PlatformIds": null,
+        ///             "Platforms": []
+        ///         }
+        ///     ],
+        ///     "Count": 18
+        /// }
+        /// </returns>
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAllMovies(
@@ -33,6 +56,33 @@ namespace StreamingPlatformFinder.Controllers
             return Ok(new PagedResult(movies.ToList(), totalMovies));
         }
 
+        /// <summary>
+        /// api to get movie by Id
+        /// /api/movies/{id}
+        /// </summary>
+        /// <param name="id">int id of the movie</param>
+        /// <returns>
+        /// {
+        ///     "Id": 32,
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": null,
+        ///     "Platforms": [
+        ///         {
+        ///             "Id": 3,
+        ///             "Name": "Hulu",
+        ///             "Movies": []
+        ///         },
+        ///         {
+        ///             "Id": 6,
+        ///             "Name": "Prime",
+        ///             "Movies": []
+        ///         }
+        ///     ]
+        /// }
+        /// </returns>
         [HttpGet]
         [Route("{id:int}")]
         public IHttpActionResult GetMovieById(int id)
@@ -45,6 +95,30 @@ namespace StreamingPlatformFinder.Controllers
             return Ok(movieInDb);
         }
 
+        /// <summary>
+        /// api to add new movie
+        /// </summary>
+        /// <request>
+        /// {
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": [1, 2],
+        /// }
+        /// </request>
+        /// <param name="movie">new movie object</param>
+        /// <returns>
+        /// {
+        ///     "Id": 32,
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": null,
+        ///     "Platforms": []
+        /// }
+        /// </returns>
         [HttpPost]
         [Route("")]
         public IHttpActionResult AddMovie(Movie movie)
@@ -61,13 +135,40 @@ namespace StreamingPlatformFinder.Controllers
                 return BadRequest("Movie already exists in the database.");
 
             var newMovie = _db.Movies.Add(movie);
-            newMovie.Platforms = GetPlatformsByIds(newMovie.PlatformIds);
+
+            if (newMovie.PlatformIds != null)
+                newMovie.Platforms = GetPlatformsByIds(newMovie.PlatformIds);
 
             _db.SaveChanges();
 
             return Created(newMovie.Id.ToString(), newMovie);
         }
 
+        /// <summary>
+        /// api to update existing movie
+        /// </summary>
+        /// <request>
+        /// {
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": [1, 2],
+        /// }
+        /// </request>
+        /// <param name="id">int id of the movie to update</param>
+        /// <param name="movie">updated movie object</param>
+        /// <returns>
+        /// {
+        ///     "Id": 32,
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": null,
+        ///     "Platforms": []
+        /// }
+        /// </returns>
         [HttpPut]
         [Route("{id:int}")]
         public IHttpActionResult UpdateMovie([FromUri] int id, [FromBody] Movie movie)
@@ -85,17 +186,36 @@ namespace StreamingPlatformFinder.Controllers
             movieInDb.ReleaseYear = movie.ReleaseYear;
             movieInDb.Genre = movie.Genre;
 
-            movieInDb.Platforms.RemoveAll(p => p != null);
-            GetPlatformsByIds(movie.PlatformIds).ForEach(p =>
+            if (movie.PlatformIds != null)
             {
-                movieInDb.Platforms.Add(p);
-            });
+                movieInDb.Platforms.RemoveAll(p => p != null);
+                GetPlatformsByIds(movie.PlatformIds).ForEach(p =>
+                {
+                    movieInDb.Platforms.Add(p);
+                });
+            }
 
             _db.SaveChanges();
 
             return Ok(movieInDb);
         }
 
+        /// <summary>
+        /// api to delete a movie
+        /// </summary>
+        /// <param name="id">int id of the movie to delete</param>
+        /// <returns>
+        /// deleted movie object
+        /// {
+        ///     "Id": 32,
+        ///     "Title": "MovieTitle",
+        ///     "Director": "Emanuel Gislason",
+        ///     "Genre": "Action",
+        ///     "ReleaseYear": 2020,
+        ///     "PlatformIds": null,
+        ///     "Platforms": []
+        /// }
+        /// </returns>
         [HttpDelete]
         [Route("{id:int}")]
         public IHttpActionResult DeleteMovie([FromUri] int id)
