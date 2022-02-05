@@ -59,7 +59,9 @@ window.onload = function () {
   function createNewTr(movie) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${movie.Title}</td>
+      <td>
+        <a href="/movies/show/${movie.Id}">${movie.Title}</a>
+      </td>
       <td>${movie.Director}</td>
       <td>${movie.Genre}</td>
       <td>${movie.ReleaseYear}</td>`;

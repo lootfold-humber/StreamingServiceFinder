@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using StreamingPlatformFinder.Models;
+using System.Web.Mvc;
 
 namespace StreamingPlatformFinder.Controllers
 {
@@ -19,7 +20,7 @@ namespace StreamingPlatformFinder.Controllers
             return View();
         }
 
-        public ActionResult Update()
+        public ActionResult Edit()
         {
             return View();
         }
