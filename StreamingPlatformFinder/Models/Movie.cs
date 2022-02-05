@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreamingPlatformFinder.Models
 {
     public class Movie
     {
+        public Movie()
+        {
+            Platforms = new List<Platform>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -22,6 +26,8 @@ namespace StreamingPlatformFinder.Models
 
         [Required]
         public int ReleaseYear { get; set; }
+
+        public List<int> PlatformIds { get; set; }
 
         public List<Platform> Platforms { get; set; }
     }

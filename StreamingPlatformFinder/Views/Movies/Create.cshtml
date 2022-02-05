@@ -4,7 +4,7 @@
 
 @Scripts.Render("~/Scripts/Movies/create.js")
 
-<h2>Create</h2>
+<h2>Add new movie</h2>
 
 <form id="addMovie">
     <div class="form-group">
@@ -22,6 +22,13 @@
     <div class="form-group">
         <label class="control-label" for="releaseYear">Year</label>
         <input class="form-control" type="number" name="releaseYear" id="releaseYear" />
+    </div>
+    <div>
+        <fieldset id="platforms">
+            <legend>
+                Select streaming platforms:
+            </legend>
+        </fieldset>
     </div>
     <button class="btn btn-primary" type="submit">Save</button>
     <button class="btn" type="reset">Reset</button>

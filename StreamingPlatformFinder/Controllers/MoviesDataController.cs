@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Data.Entity;
 using System.Web.Http;
 using StreamingPlatformFinder.Models;
 
@@ -35,7 +37,7 @@ namespace StreamingPlatformFinder.Controllers
         [Route("{id:int}")]
         public IHttpActionResult GetMovieById(int id)
         {
-            var movieInDb = _db.Movies.SingleOrDefault(x => x.Id == id);
+            var movieInDb = _db.Movies.Include(m => m.Platforms).SingleOrDefault(x => x.Id == id);
 
             if (movieInDb == null)
                 return NotFound();
@@ -59,6 +61,8 @@ namespace StreamingPlatformFinder.Controllers
                 return BadRequest("Movie already exists in the database.");
 
             var newMovie = _db.Movies.Add(movie);
+            newMovie.Platforms = GetPlatformsByIds(newMovie.PlatformIds);
+
             _db.SaveChanges();
 
             return Created(newMovie.Id.ToString(), newMovie);
@@ -99,6 +103,11 @@ namespace StreamingPlatformFinder.Controllers
             _db.SaveChanges();
 
             return Ok(movieInDb);
+        }
+
+        private List<Platform> GetPlatformsByIds(List<int> ids)
+        {
+            return _db.Platforms.Where(x => ids.Contains(x.Id)).ToList();
         }
     }
 }

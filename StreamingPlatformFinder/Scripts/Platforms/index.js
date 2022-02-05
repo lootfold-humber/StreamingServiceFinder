@@ -25,7 +25,6 @@ window.onload = function () {
     xhr.onload = function () {
       if (this.status == 200) {
         platforms = JSON.parse(xhr.response);
-        console.log(platforms);
         clearUl();
         updateUl();
       }

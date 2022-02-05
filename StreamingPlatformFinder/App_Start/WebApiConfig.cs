@@ -19,6 +19,9 @@ namespace StreamingPlatformFinder
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // https://docs.microsoft.com/en-us/archive/blogs/hongyes/loop-reference-handling-in-web-api
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }
