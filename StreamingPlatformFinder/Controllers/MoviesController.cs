@@ -1,5 +1,4 @@
-﻿using StreamingPlatformFinder.Models;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace StreamingPlatformFinder.Controllers
 {
