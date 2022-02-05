@@ -16,6 +16,8 @@ namespace StreamingPlatformFinder.Controllers
             int pageNo = 1,
             string searchKey = null)
         {
+            var totalMovies = _db.Movies.Count();
+
             var movies = _db.Movies.AsQueryable();
 
             if (searchKey != null)
@@ -26,7 +28,7 @@ namespace StreamingPlatformFinder.Controllers
                         .Skip((pageNo - 1) * pageSize)
                         .Take(pageSize);
 
-            return Ok(movies);
+            return Ok(new PagedResult(movies.ToList(), totalMovies));
         }
 
         [HttpGet]

@@ -2,6 +2,7 @@
 let moviesArray = [];
 let pageNo = 1;
 let pageSize = 5;
+let totalPages = 0;
 let searchKey = null;
 
 window.onload = function () {
@@ -51,7 +52,7 @@ window.onload = function () {
   }
 
   function checkNextPageBtn() {
-    if (moviesArray.length === 0) disableBtn(nextBtn);
+    if (pageNo === totalPages) disableBtn(nextBtn);
     else enableBtn(nextBtn);
   }
 
@@ -99,7 +100,9 @@ window.onload = function () {
 
     xhr.onload = function () {
       if (this.status == 200) {
-        moviesArray = JSON.parse(xhr.response);
+        const response = JSON.parse(xhr.response);
+        moviesArray = response.Movies;
+        totalPages = Math.ceil(response.Count / pageSize);
         clearTbody();
         updateTbody();
         checkPrevPageBtn();
