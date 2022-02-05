@@ -5,8 +5,11 @@ let pageSize = 5;
 let searchKey = null;
 
 window.onload = function () {
+  const searchBox = document.querySelector("#searchBox");
   const prevBtn = document.querySelector("#btnPrev");
   const nextBtn = document.querySelector("#btnNext");
+
+  searchBox.onkeyup = searchMovie;
 
   prevBtn.onclick = prevPage;
   nextBtn.onclick = nextPage;
@@ -15,6 +18,18 @@ window.onload = function () {
   checkNextPageBtn();
 
   getMovies();
+
+  function searchMovie() {
+    if (searchBox.value.length >= 3) {
+      searchKey = searchBox.value;
+      getMovies();
+    }
+
+    if (searchBox.value.length < 3 && searchKey != null) {
+      searchKey = null;
+      getMovies();
+    }
+  }
 
   function prevPage() {
     pageNo--;
@@ -77,7 +92,7 @@ window.onload = function () {
   function getMovies() {
     var xhr = new XMLHttpRequest();
 
-    const url = `${baseUrl}?pageNo=${pageNo}&pageSize=${pageSize}`;
+    let url = `${baseUrl}?pageNo=${pageNo}&pageSize=${pageSize}`;
     if (searchKey) url += `&searchKey=${searchKey}`;
 
     xhr.open("GET", url, true);
