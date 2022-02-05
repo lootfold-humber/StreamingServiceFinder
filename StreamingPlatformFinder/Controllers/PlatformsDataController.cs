@@ -10,6 +10,24 @@ namespace StreamingPlatformFinder.Controllers
     {
         private readonly AppDbContext _db = new AppDbContext();
 
+        /// <summary>
+        /// api to get all platforms
+        /// GET: /api/platforms
+        /// </summary>
+        /// <returns>
+        /// [
+        ///     {
+        ///         "Id": 3,
+        ///         "Name": "Hulu",
+        ///         "Movies": null
+        ///     },
+        ///     {
+        ///         "Id": 2,
+        ///         "Name": "Netflix",
+        ///         "Movies": null
+        ///     }
+        /// ]
+        /// </returns>
         [HttpGet]
         [Route("")]
         public IEnumerable<Platform> GetPlatforms()
@@ -17,6 +35,18 @@ namespace StreamingPlatformFinder.Controllers
             return _db.Platforms;
         }
 
+        /// <summary>
+        /// api to get platforms by Id
+        /// GET: /api/platforms/{id}
+        /// </summary>
+        /// <param name="id">int id of the patform</param>
+        /// <returns>
+        /// {
+        ///     "Id": 3,
+        ///     "Name": "Hulu",
+        ///     "Movies": null
+        /// }
+        /// </returns>
         [HttpGet]
         [Route("{id:int}")]
         public IHttpActionResult GetPlatformById([FromUri] int id)
@@ -29,6 +59,23 @@ namespace StreamingPlatformFinder.Controllers
             return Ok(platformInDB);
         }
 
+        /// <summary>
+        /// api to add new platform
+        /// POST: /api/platforms
+        /// </summary>
+        /// <param name="platform">platform object</param>
+        /// <request>
+        /// {
+        ///     "name": "Disney Plus"
+        /// }
+        /// </request>
+        /// <returns>
+        /// {
+        ///     "Id": 7,
+        ///     "Name": "Disney Plus",
+        ///     "Movies": null
+        /// }
+        /// </returns>
         [HttpPost]
         [Route("")]
         public IHttpActionResult AddPlatform([FromBody] Platform platform)
@@ -46,6 +93,24 @@ namespace StreamingPlatformFinder.Controllers
             return Created(newPlatform.Id.ToString(), newPlatform);
         }
 
+        /// <summary>
+        /// api to update platform
+        /// PUT: /api/platforms/{id}
+        /// </summary>
+        /// <param name="id">int id of the platform to update</param>
+        /// <param name="platform">updated platform object</param>
+        /// <request>
+        /// {
+        ///     "name": "Disney+"
+        /// }
+        /// </request>
+        /// <returns>
+        /// {
+        ///     "Id": 7,
+        ///     "Name": "Disney+",
+        ///     "Movies": null
+        /// }
+        /// </returns>
         [HttpPut]
         [Route("{id:int}")]
         public IHttpActionResult UpdatePlatform([FromUri] int id, [FromBody] Platform platform)
@@ -64,6 +129,18 @@ namespace StreamingPlatformFinder.Controllers
             return Ok(platformInDb);
         }
 
+        /// <summary>
+        /// api to delete platform by Id
+        /// DELETE: /api/platforms/{id}
+        /// </summary>
+        /// <param name="id">int id of the patform to delete</param>
+        /// <returns>
+        /// {
+        ///     "Id": 3,
+        ///     "Name": "Hulu",
+        ///     "Movies": null
+        /// }
+        /// </returns>
         [HttpDelete]
         [Route("{id:int}")]
         public IHttpActionResult DeletePlatform([FromUri] int id)

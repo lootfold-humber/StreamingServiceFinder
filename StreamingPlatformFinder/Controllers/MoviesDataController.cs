@@ -13,7 +13,7 @@ namespace StreamingPlatformFinder.Controllers
 
         /// <summary>
         /// api to get all movies, supports pagination
-        /// movies?pageNo=1&pageSize=5&searchKey=dune
+        /// GET: /api/movies?pageNo=1&pageSize=5&searchKey=dune
         /// </summary>
         /// <param name="pageSize">no of movies per page</param>
         /// <param name="pageNo">page no to fetch</param>
@@ -58,7 +58,7 @@ namespace StreamingPlatformFinder.Controllers
 
         /// <summary>
         /// api to get movie by Id
-        /// /api/movies/{id}
+        /// GET: /api/movies/{id}
         /// </summary>
         /// <param name="id">int id of the movie</param>
         /// <returns>
@@ -97,7 +97,9 @@ namespace StreamingPlatformFinder.Controllers
 
         /// <summary>
         /// api to add new movie
+        /// POST: /api/movies/{id}
         /// </summary>
+        /// <param name="movie">new movie object</param>
         /// <request>
         /// {
         ///     "Title": "MovieTitle",
@@ -107,7 +109,6 @@ namespace StreamingPlatformFinder.Controllers
         ///     "PlatformIds": [1, 2],
         /// }
         /// </request>
-        /// <param name="movie">new movie object</param>
         /// <returns>
         /// {
         ///     "Id": 32,
@@ -146,7 +147,10 @@ namespace StreamingPlatformFinder.Controllers
 
         /// <summary>
         /// api to update existing movie
+        /// PUT: /api/movies/{id}
         /// </summary>
+        /// <param name="id">int id of the movie to update</param>
+        /// <param name="movie">updated movie object</param>
         /// <request>
         /// {
         ///     "Title": "MovieTitle",
@@ -156,8 +160,6 @@ namespace StreamingPlatformFinder.Controllers
         ///     "PlatformIds": [1, 2],
         /// }
         /// </request>
-        /// <param name="id">int id of the movie to update</param>
-        /// <param name="movie">updated movie object</param>
         /// <returns>
         /// {
         ///     "Id": 32,
@@ -202,10 +204,10 @@ namespace StreamingPlatformFinder.Controllers
 
         /// <summary>
         /// api to delete a movie
+        /// DELETE: /api/movies/32
         /// </summary>
         /// <param name="id">int id of the movie to delete</param>
         /// <returns>
-        /// deleted movie object
         /// {
         ///     "Id": 32,
         ///     "Title": "MovieTitle",
