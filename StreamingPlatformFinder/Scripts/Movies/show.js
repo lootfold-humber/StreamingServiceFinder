@@ -1,96 +1,48 @@
-﻿const baseUrl = "/api/movies";
-let platforms = [];
+﻿let allPlatforms = [];
 let movieId;
-let movie;
+let movieToShow;
 
-window.onload = function () {
-  getPlatforms();
+let editBtn;
+let deleteBtn;
 
+window.onload = handleLoad;
+
+function handleLoad() {
   const splitArr = window.location.toString().split("/");
   movieId = splitArr[splitArr.length - 1];
 
-  const editBtn = document.querySelector("#btnEdit");
-  const deleteBtn = document.querySelector("#btnDelete");
+  editBtn = document.querySelector("#btnEdit");
+  deleteBtn = document.querySelector("#btnDelete");
 
-  editBtn.onclick = function () {
-    window.location.replace(`/movies/edit/${movieId}`);
-  };
+  editBtn.onclick = handleEdit;
+  deleteBtn.onclick = handleDelete;
 
-  deleteBtn.onclick = function () {
-    var xhr = new XMLHttpRequest();
+  getAllPlatforms();
+}
 
-    xhr.open("DELETE", `${baseUrl}/${movieId}`, true);
+function getAllPlatforms() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/api/platforms", true);
 
-    xhr.onload = function () {
-      if (this.status == 200) {
-        window.location.replace(`/movies/index`);
-      }
-    };
-
-    xhr.send();
-  };
-
-  function addMovieToPage() {
-    const titleTxt = document.querySelector("#title");
-    const directorTxt = document.querySelector("#director");
-    const genreTxt = document.querySelector("#genre");
-    const yearTxt = document.querySelector("#releaseYear");
-    const platformsInp = document.querySelectorAll('[name="platforms"]');
-
-    titleTxt.value = movie.Title;
-    directorTxt.value = movie.Director;
-    genreTxt.value = movie.Genre;
-    yearTxt.value = movie.ReleaseYear;
-
-    const platformIds = movie.Platforms.map((p) => p.Id);
-
-    for (let i = 0; i < platformsInp.length; i++) {
-      const checkBox = platformsInp[i];
-      const checkBoxValue = parseInt(checkBox["value"]);
-      if (platformIds.includes(checkBoxValue)) {
-        checkBox.checked = true;
-      }
+  xhr.onload = function () {
+    if (this.status == 200) {
+      allPlatforms = JSON.parse(xhr.response);
+      addCheckboxesForPlatform();
+      getMovieToShow();
     }
-  }
+  };
+  xhr.send();
+}
 
-  function getMovie() {
-    var xhr = new XMLHttpRequest();
+function addCheckboxesForPlatform() {
+  const div = document.querySelector("#platforms");
+  allPlatforms.forEach((p) => {
+    div.innerHTML += createCheckboxForPlatform(p);
+  });
+}
 
-    xhr.open("GET", `${baseUrl}/${movieId}`, true);
-
-    xhr.onload = function () {
-      if (this.status == 200) {
-        movie = JSON.parse(xhr.response);
-        addMovieToPage();
-      }
-    };
-
-    xhr.send();
-  }
-
-  function getPlatforms() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/api/platforms", true);
-
-    xhr.onload = function () {
-      if (this.status == 200) {
-        platforms = JSON.parse(xhr.response);
-        addCheckboxesForPlatform();
-        getMovie();
-      }
-    };
-    xhr.send();
-  }
-
-  function addCheckboxesForPlatform() {
-    const div = document.querySelector("#platforms");
-    platforms.forEach((p) => {
-      div.innerHTML += createCheckboxForPlatform(p);
-    });
-  }
-
-  function createCheckboxForPlatform(platform) {
-    return `
+function createCheckboxForPlatform(platform) {
+  return `
       <input
         type="checkbox"
         id="${platform.Name.toLowerCase()}"
@@ -101,5 +53,60 @@ window.onload = function () {
         for="${platform.Name.toLowerCase()}">
           ${platform.Name}
       </label>`;
+}
+
+function getMovieToShow() {
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("GET", `/api/movies/${movieId}`, true);
+
+  xhr.onload = function () {
+    if (this.status == 200) {
+      movieToShow = JSON.parse(xhr.response);
+      addMovieDetailsToPage();
+    }
+  };
+
+  xhr.send();
+}
+
+function addMovieDetailsToPage() {
+  const titleTxt = document.querySelector("#title");
+  const directorTxt = document.querySelector("#director");
+  const genreTxt = document.querySelector("#genre");
+  const yearTxt = document.querySelector("#releaseYear");
+  const platformsInp = document.querySelectorAll('[name="platforms"]');
+
+  titleTxt.value = movieToShow.Title;
+  directorTxt.value = movieToShow.Director;
+  genreTxt.value = movieToShow.Genre;
+  yearTxt.value = movieToShow.ReleaseYear;
+
+  const platformIds = movieToShow.Platforms.map((p) => p.Id);
+
+  for (let i = 0; i < platformsInp.length; i++) {
+    const checkBox = platformsInp[i];
+    const checkBoxValue = parseInt(checkBox["value"]);
+    if (platformIds.includes(checkBoxValue)) {
+      checkBox.checked = true;
+    }
   }
-};
+}
+
+function handleEdit() {
+  window.location.replace(`/movies/edit/${movieId}`);
+}
+
+function handleDelete() {
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("DELETE", `/api/movies/${movieId}`, true);
+
+  xhr.onload = function () {
+    if (this.status == 200) {
+      window.location.replace(`/movies/index`);
+    }
+  };
+
+  xhr.send();
+}
