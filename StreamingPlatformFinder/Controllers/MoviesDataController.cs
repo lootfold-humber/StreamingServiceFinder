@@ -179,9 +179,15 @@ namespace StreamingPlatformFinder.Controllers
                 return BadRequest(ModelState);
 
             var movieInDb = _db.Movies.Include(m => m.Platforms).SingleOrDefault(x => x.Id == id);
-
             if (movieInDb == null)
                 return NotFound();
+
+            var duplicateMovieInDb = _db.Movies.SingleOrDefault(m =>
+                                        m.Title == movie.Title &&
+                                        m.Director == movie.Director &&
+                                        m.ReleaseYear == movie.ReleaseYear);
+            if (duplicateMovieInDb != null)
+                return BadRequest("Movie already exists in the database.");
 
             movieInDb.Title = movie.Title;
             movieInDb.Director = movie.Director;

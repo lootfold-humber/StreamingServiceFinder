@@ -123,6 +123,10 @@ namespace StreamingPlatformFinder.Controllers
             if (platformInDb == null)
                 return NotFound();
 
+            var duplicatePlatformInDb = _db.Platforms.SingleOrDefault(p => p.Name == platform.Name);
+            if (duplicatePlatformInDb != null)
+                return BadRequest("Platform already exists in the database.");
+
             platformInDb.Name = platform.Name;
             _db.SaveChanges();
 
