@@ -75,7 +75,7 @@ namespace StreamingPlatformFinder.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var movieInDb = _db.Movies.SingleOrDefault(x => x.Id == id);
+            var movieInDb = _db.Movies.Include(m => m.Platforms).SingleOrDefault(x => x.Id == id);
 
             if (movieInDb == null)
                 return NotFound();
@@ -84,6 +84,12 @@ namespace StreamingPlatformFinder.Controllers
             movieInDb.Director = movie.Director;
             movieInDb.ReleaseYear = movie.ReleaseYear;
             movieInDb.Genre = movie.Genre;
+
+            movieInDb.Platforms.RemoveAll(p => p != null);
+            GetPlatformsByIds(movie.PlatformIds).ForEach(p =>
+            {
+                movieInDb.Platforms.Add(p);
+            });
 
             _db.SaveChanges();
 
