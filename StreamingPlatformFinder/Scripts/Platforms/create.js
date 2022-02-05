@@ -1,23 +1,27 @@
-﻿const baseUrl = "/api/platforms";
+﻿let addForm;
 
-window.onload = function () {
-  const form = document.forms.addPlatform;
-  form.onsubmit = function () {
-    const requestBody = {
-      name: form.name.value,
-    };
+window.onload = handleLoad;
 
-    var xhr = new XMLHttpRequest();
+function handleLoad() {
+  addForm = document.forms.addPlatform;
+  addForm.onsubmit = handleSubmit;
+}
 
-    xhr.open("POST", baseUrl, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function () {
-      if (this.status == 201) {
-        window.location.replace("/platforms/index");
-      }
-    };
-
-    xhr.send(JSON.stringify(requestBody));
-    return false;
+function handleSubmit() {
+  const requestBody = {
+    name: addForm.name.value,
   };
-};
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "/api/platforms", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function () {
+    if (this.status == 201) {
+      window.location.replace("/platforms/index");
+    }
+  };
+
+  xhr.send(JSON.stringify(requestBody));
+  return false;
+}

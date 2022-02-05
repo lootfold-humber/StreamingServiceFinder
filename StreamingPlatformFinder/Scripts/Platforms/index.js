@@ -1,34 +1,35 @@
-﻿const baseUrl = "/api/platforms";
-let platforms = [];
+﻿let platforms = [];
 
-window.onload = function () {
+window.onload = handleLoad;
+
+function handleLoad() {
   getPlatforms();
+}
 
-  function updateUl() {
-    const ul = document.querySelector("#platformList");
-    platforms.forEach((p) => {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="/platforms/show/${p.Id}">${p.Name}</a>`;
-      ul.appendChild(li);
-    });
-  }
+function getPlatforms() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/api/platforms", true);
 
-  function clearUl() {
-    const ul = document.querySelector("#platformList");
-    ul.innerHTML = "";
-  }
+  xhr.onload = function () {
+    if (this.status == 200) {
+      platforms = JSON.parse(xhr.response);
+      clearUl();
+      updateUl();
+    }
+  };
+  xhr.send();
+}
 
-  function getPlatforms() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", baseUrl, true);
+function clearUl() {
+  const ul = document.querySelector("#platformList");
+  ul.innerHTML = "";
+}
 
-    xhr.onload = function () {
-      if (this.status == 200) {
-        platforms = JSON.parse(xhr.response);
-        clearUl();
-        updateUl();
-      }
-    };
-    xhr.send();
-  }
-};
+function updateUl() {
+  const ul = document.querySelector("#platformList");
+  platforms.forEach((p) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="/platforms/show/${p.Id}">${p.Name}</a>`;
+    ul.appendChild(li);
+  });
+}
