@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+@Scripts.Render("~/Scripts/Platforms/edit.js")
+
+<h2>Edit</h2>
+
+<form id="editPlatform">
+    <div class="form-group">
+        <label class="control-label" for="name">Name</label>
+        <input class="form-control" type="text" name="name" id="name" required minlength="3" />
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn" type="reset">Reset</button>
+</form>

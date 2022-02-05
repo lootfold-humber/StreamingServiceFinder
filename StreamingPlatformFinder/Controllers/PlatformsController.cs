@@ -13,5 +13,10 @@ namespace StreamingPlatformFinder.Controllers
         {
             return View();
         }
+        
+        public ActionResult Edit()
+        {
+            return View();
+        }
     }
 }
