@@ -27,6 +27,8 @@ namespace StreamingPlatformFinder.Models
         [Required]
         public int ReleaseYear { get; set; }
 
+        public string FileName { get; set; }
+
         public List<int> PlatformIds { get; set; }
 
         public List<Platform> Platforms { get; set; }

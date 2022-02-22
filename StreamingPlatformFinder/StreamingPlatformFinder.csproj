@@ -179,6 +179,10 @@
     <Compile Include="Migrations\202202040142279_AddConstraintsToModels.designer.cs">
       <DependentUpon>202202040142279_AddConstraintsToModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202221843369_AddFileNameForMoviePoster.cs" />
+    <Compile Include="Migrations\202202221843369_AddFileNameForMoviePoster.designer.cs">
+      <DependentUpon>202202221843369_AddFileNameForMoviePoster.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDbContext.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -293,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202040142279_AddConstraintsToModels.resx">
       <DependentUpon>202202040142279_AddConstraintsToModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202221843369_AddFileNameForMoviePoster.resx">
+      <DependentUpon>202202221843369_AddFileNameForMoviePoster.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

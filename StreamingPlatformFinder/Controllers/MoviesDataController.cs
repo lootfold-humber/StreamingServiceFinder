@@ -160,6 +160,12 @@ namespace StreamingPlatformFinder.Controllers
         [Route("{id:int}/upload")]
         public IHttpActionResult UploadPoster([FromUri] int id)
         {
+            var movieInDb = _db.Movies.SingleOrDefault(m => m.Id == id);
+            if (movieInDb == null)
+            {
+                return NotFound();
+            }
+
             if (!Request.Content.IsMimeMultipartContent())
             {
                 return StatusCode(HttpStatusCode.UnsupportedMediaType);
@@ -196,6 +202,10 @@ namespace StreamingPlatformFinder.Controllers
 
                 //save the file
                 poster.SaveAs(path);
+
+                movieInDb.FileName = fileName;
+                _db.SaveChanges();
+
                 return Ok();
             }
             catch (Exception ex)
@@ -293,6 +303,15 @@ namespace StreamingPlatformFinder.Controllers
 
             if (movieInDb == null)
                 return NotFound();
+
+            if (movieInDb.FileName != null)
+            {
+                string path = HttpContext.Current.Server.MapPath($"~/App_Data/Posters/{movieInDb.FileName}");
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
 
             _db.Movies.Remove(movieInDb);
             _db.SaveChanges();

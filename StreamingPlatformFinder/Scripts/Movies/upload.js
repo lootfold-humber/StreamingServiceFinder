@@ -17,9 +17,9 @@ function handleUpload() {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", `/api/movies/${movieId}/upload`, true);
   xhr.onload = function () {
-    if (this.status == 201) {
+    if (this.status == 200) {
       console.log("done");
-      //   window.location.replace("/movies/index");
+      window.location.replace(`/movies/show/${movieId}`);
     }
   };
   xhr.send(formData);
