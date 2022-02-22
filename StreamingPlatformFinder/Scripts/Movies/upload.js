@@ -11,6 +11,7 @@ function handleLoad() {
   uploadForm.onsubmit = handleUpload;
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
 function handleUpload() {
   const formData = new FormData(uploadForm);
 

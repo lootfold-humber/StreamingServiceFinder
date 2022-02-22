@@ -79,11 +79,18 @@ function addMovieDetailsToPage() {
   const genreTxt = document.querySelector("#genre");
   const yearTxt = document.querySelector("#releaseYear");
   const platformsInp = document.querySelectorAll('[name="platforms"]');
+  const imageEl = document.querySelector("#moviePoster");
 
-  titleTxt.value = movieToShow.Title;
-  directorTxt.value = movieToShow.Director;
-  genreTxt.value = movieToShow.Genre;
-  yearTxt.value = movieToShow.ReleaseYear;
+  titleTxt.innerHTML = movieToShow.Title;
+  directorTxt.innerHTML = movieToShow.Director;
+  genreTxt.innerHTML = movieToShow.Genre;
+  yearTxt.innerHTML = movieToShow.ReleaseYear;
+
+  if (movieToShow.FileName != null) {
+    imageEl.src = `/Content/Images/${movieToShow.FileName}`;
+  } else {
+    imageEl.style.display = "none";
+  }
 
   const platformIds = movieToShow.Platforms.map((p) => p.Id);
 

@@ -198,7 +198,7 @@ namespace StreamingPlatformFinder.Controllers
                 string fileName = id + "." + extension;
 
                 //get a direct file path to ~/Content/animals/{id}.{extension}
-                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/Posters/"), fileName);
+                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/"), fileName);
 
                 //save the file
                 poster.SaveAs(path);
@@ -306,7 +306,7 @@ namespace StreamingPlatformFinder.Controllers
 
             if (movieInDb.FileName != null)
             {
-                string path = HttpContext.Current.Server.MapPath($"~/App_Data/Posters/{movieInDb.FileName}");
+                string path = HttpContext.Current.Server.MapPath($"~/Content/Images/{movieInDb.FileName}");
                 if (File.Exists(path))
                 {
                     File.Delete(path);
