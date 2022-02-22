@@ -6,11 +6,12 @@
 
 <h2>Movies</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<input class="form-control" type="text" name="searchKey" id="searchBox" placeholder="search movies" />
+<div class="top">
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <input class="form-control" type="text" name="searchKey" id="searchBox" placeholder="search movies" />
+</div>
 
 <table class="table" id="movieTable">
     <thead>
