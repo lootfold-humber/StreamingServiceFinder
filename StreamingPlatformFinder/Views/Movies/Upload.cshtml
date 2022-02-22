@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "UploadPoster";
+}
+
+@Scripts.Render("~/Scripts/Movies/upload.js")
+
+<h2>UploadPoster</h2>
+
+<form id="uploadPoster" method="post" enctype="multipart/form-data" novalidate="novalidate">
+    <div class="form-group">
+        <label for="poster">Poster</label>
+        <input type="file" name="poster" id="poster" />
+    </div>
+    <button type="submit">Submit</button>
+</form>

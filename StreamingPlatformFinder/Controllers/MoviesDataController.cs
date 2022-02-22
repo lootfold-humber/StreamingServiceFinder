@@ -3,6 +3,12 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web.Http;
 using StreamingPlatformFinder.Models;
+using System.Net.Http;
+using System.Web;
+using System;
+using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace StreamingPlatformFinder.Controllers
 {
@@ -143,6 +149,61 @@ namespace StreamingPlatformFinder.Controllers
             _db.SaveChanges();
 
             return Created(newMovie.Id.ToString(), newMovie);
+        }
+
+        /// <summary>
+        /// api to upload poster for a movie
+        /// </summary>
+        /// <param name="id">int id of the movie</param>
+        /// <returns>Ok</returns>
+        [HttpPost]
+        [Route("{id:int}/upload")]
+        public IHttpActionResult UploadPoster([FromUri] int id)
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                return StatusCode(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            int numfiles = HttpContext.Current.Request.Files.Count;
+            if (numfiles != 1 || HttpContext.Current.Request.Files[0] == null)
+            {
+                return BadRequest("Invalid file.");
+            }
+
+            //Check if the file is empty
+            var poster = HttpContext.Current.Request.Files[0];
+            if (poster.ContentLength <= 0)
+            {
+                return BadRequest("Invalid file.");
+            }
+
+            //establish valid file types (can be changed to other file extensions if desired!)
+            var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+            var extension = Path.GetExtension(poster.FileName).Substring(1);
+            if (!valtypes.Contains(extension))
+            {
+                return BadRequest("Invalid file extention.");
+            }
+
+            try
+            {
+                //file name is the id of the image
+                string fileName = id + "." + extension;
+
+                //get a direct file path to ~/Content/animals/{id}.{extension}
+                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/Posters/"), fileName);
+
+                //save the file
+                poster.SaveAs(path);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Image was not saved successfully.");
+                Debug.WriteLine("Exception:" + ex);
+                return InternalServerError();
+            }
         }
 
         /// <summary>

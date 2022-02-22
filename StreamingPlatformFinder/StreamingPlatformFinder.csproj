@@ -226,6 +226,7 @@
     <Content Include="Scripts\Movies\edit.js" />
     <Content Include="Scripts\Movies\index.js" />
     <Content Include="Scripts\Movies\show.js" />
+    <Content Include="Scripts\Movies\upload.js" />
     <Content Include="Scripts\Platforms\create.js" />
     <Content Include="Scripts\Platforms\edit.js" />
     <Content Include="Scripts\Platforms\index.js" />
@@ -252,9 +253,10 @@
     <Content Include="Views\Platforms\Show.cshtml" />
     <Content Include="Views\Platforms\Edit.cshtml" />
     <Content Include="Views\Platforms\Create.cshtml" />
+    <Content Include="Views\Movies\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Posters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

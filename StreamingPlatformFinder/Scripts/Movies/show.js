@@ -4,6 +4,7 @@ let movieToShow;
 
 let editBtn;
 let deleteBtn;
+let uploadBtn;
 
 window.onload = handleLoad;
 
@@ -13,9 +14,11 @@ function handleLoad() {
 
   editBtn = document.querySelector("#btnEdit");
   deleteBtn = document.querySelector("#btnDelete");
+  uploadBtn = document.querySelector("#btnUpload");
 
   editBtn.onclick = handleEdit;
   deleteBtn.onclick = handleDelete;
+  uploadBtn.onclick = handleUpload;
 
   getAllPlatforms();
 }
@@ -95,6 +98,10 @@ function addMovieDetailsToPage() {
 
 function handleEdit() {
   window.location.replace(`/movies/edit/${movieId}`);
+}
+
+function handleUpload() {
+  window.location.replace(`/movies/upload/${movieId}`);
 }
 
 function handleDelete() {
