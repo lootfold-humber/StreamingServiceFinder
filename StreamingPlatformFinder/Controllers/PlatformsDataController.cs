@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace StreamingPlatformFinder.Controllers
 {
@@ -51,7 +52,7 @@ namespace StreamingPlatformFinder.Controllers
         [Route("{id:int}")]
         public IHttpActionResult GetPlatformById([FromUri] int id)
         {
-            var platformInDB = _db.Platforms.SingleOrDefault(x => x.Id == id);
+            var platformInDB = _db.Platforms.Include(p => p.Movies).SingleOrDefault(x => x.Id == id);
 
             if (platformInDB == null)
                 return NotFound();

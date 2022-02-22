@@ -27,6 +27,7 @@ function getPlatform() {
     if (this.status == 200) {
       platformToShow = JSON.parse(xhr.response);
       addPlatformToPage();
+      addMoviesToPage();
     }
   };
 
@@ -34,8 +35,16 @@ function getPlatform() {
 }
 
 function addPlatformToPage() {
-  const nameTxt = document.querySelector("#name");
-  nameTxt.value = platformToShow.Name;
+  const nameEl = document.querySelector("#platformName");
+  nameEl.innerHTML = platformToShow.Name;
+}
+
+function addMoviesToPage() {
+  const ulEl = document.querySelector("#moviesList");
+  ulEl.innerHTML = "";
+  platformToShow.Movies.forEach((m) => {
+    ulEl.innerHTML += `<a href="/movies/show/${m.Id}"><li>${m.Title}</li></a>`;
+  });
 }
 
 function handleEdit() {
