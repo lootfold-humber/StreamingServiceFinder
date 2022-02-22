@@ -13,6 +13,12 @@
 - server side check for duplicate values
 - styling using bootstrap
 
+# Changes after MVP feedback
+
+- feature to upload movie posters
+- display list of movies for a streaming platform
+- redesign show page for both movie and streaming platforms
+
 # Movies
 
 ## Index page
