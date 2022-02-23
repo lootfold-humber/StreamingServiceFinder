@@ -257,7 +257,8 @@ namespace StreamingPlatformFinder.Controllers
                                         m.Title == movie.Title &&
                                         m.Director == movie.Director &&
                                         m.ReleaseYear == movie.ReleaseYear);
-            if (duplicateMovieInDb != null)
+
+            if (duplicateMovieInDb != null && duplicateMovieInDb.Id != movieInDb.Id)
                 return BadRequest("Movie already exists in the database.");
 
             movieInDb.Title = movie.Title;
