@@ -1,6 +1,6 @@
 ﻿let movies = [];
 let pageNo = 1;
-let pageSize = 5;
+let pageSize = 10;
 let totalPages = 0;
 let searchKey = null;
 
