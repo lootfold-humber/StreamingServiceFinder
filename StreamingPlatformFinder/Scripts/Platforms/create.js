@@ -19,6 +19,9 @@ function handleSubmit() {
   xhr.onload = function () {
     if (this.status == 201) {
       window.location.replace("/platforms/index");
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 

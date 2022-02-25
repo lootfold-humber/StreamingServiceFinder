@@ -15,6 +15,9 @@ function getPlatforms() {
       platforms = JSON.parse(xhr.response);
       clearUl();
       updateUl();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
   xhr.send();

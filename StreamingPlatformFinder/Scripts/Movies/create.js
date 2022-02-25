@@ -17,6 +17,9 @@ function getAllPlatforms() {
     if (this.status == 200) {
       allPlatforms = JSON.parse(xhr.response);
       addCheckboxesForPlatform();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
   xhr.send();
@@ -59,6 +62,9 @@ function handleAddFormSubmit() {
   xhr.onload = function () {
     if (this.status == 201) {
       window.location.replace("/movies/index");
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
   xhr.send(JSON.stringify(requestBody));

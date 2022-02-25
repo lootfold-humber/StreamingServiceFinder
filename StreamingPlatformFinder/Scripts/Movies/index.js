@@ -41,6 +41,9 @@ function getAllMovies() {
       updateTbody();
       updatePrevBtnState();
       updateNextBtnState();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 

@@ -22,6 +22,9 @@ function getPlatform() {
     if (this.status == 200) {
       platformToShow = JSON.parse(xhr.response);
       addPlatformToPage();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 
@@ -45,6 +48,9 @@ function handleSubmit() {
   xhr.onload = function () {
     if (this.status == 200) {
       window.location.replace("/platforms/index");
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 

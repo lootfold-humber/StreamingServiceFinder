@@ -21,6 +21,9 @@ function handleUpload() {
     if (this.status == 200) {
       console.log("done");
       window.location.replace(`/movies/show/${movieId}`);
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
   xhr.send(formData);

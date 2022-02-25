@@ -32,6 +32,9 @@ function getAllPlatforms() {
       allPlatforms = JSON.parse(xhr.response);
       addCheckboxesForPlatform();
       getMovieToShow();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
   xhr.send();
@@ -67,6 +70,9 @@ function getMovieToShow() {
     if (this.status == 200) {
       movieToShow = JSON.parse(xhr.response);
       addMovieDetailsToPage();
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 
@@ -119,6 +125,9 @@ function handleDelete() {
   xhr.onload = function () {
     if (this.status == 200) {
       window.location.replace(`/movies/index`);
+    } else {
+      var res = JSON.parse(xhr.response);
+      alert(res.Message || "Unexpected error occured.");
     }
   };
 
